@@ -2,7 +2,6 @@ $(document).ready(function(){
     control_mouse();
     cursor();
     scroll();
-    menu();  
     sectionTop();  
     about();
     portfolio_view();
@@ -23,14 +22,13 @@ function cursor(){
         var $pointer = parseInt(Math.random()*12)+1;
         var $pointer_go = parseInt(Math.random()*4)+1;
         $("html").css("cursor","url('images/cursor_" + $default  + ".svg') 0 0, auto");
-        pointer(".menu");
         pointer(".navigation img");
         pointer(".pagination ul"); 
         pointer(".portfolio .view_wrap > div .cancel");
         pointer_go("header h1 a");
-        pointer_go(".menu_box a");
         pointer_go(".portfolio .slide_wrap .img_wrap img");
         pointer_go(".btn");
+        pointer_go(".other .slide_wrap .hover");
         function pointer($target){
             $($target).mouseenter(function(){
                 $("html").css("cursor","url('images/cursor_pointer_" + $pointer  + ".svg') 15 15, auto");
@@ -101,50 +99,31 @@ function scroll(){
     });
 }
 
-function menu(){
-    $(".menu").click(function(){
-        $(".menu").toggleClass("active");        
-        $(".menu_box").toggleClass("active");        
-    });
-   
-    $(".menu_box nav li a.menuA").click(function(e){
-        e.preventDefault();   
-        var $navId = $(this).parent("li").attr("id");
-        var $sectionOffset = $("." + $navId).offset().top;
-        $(".menu_box").css("display","none");  
-        setTimeout(function(){
-            $("html").animate({scrollTop:$sectionOffset});
-            $(".menu").removeClass("active"); 
-            $(".menu_box").removeClass("active"); 
-            $(".menu_box").css("display","block"); 
-        },100);
-    });
-
-    $(".menu_box nav li img").mouseenter(function(){
-        $(this).attr("src","images/nav_JLH.png");        
-    });
-    $(".menu_box nav li img").mouseleave(function(){
-        $(this).attr("src","images/nav_JLH_bk.png");
-    });
-}
-
 function sectionTop(){      
     $(window).scroll(function(){
         var moveTop = $(window).scrollTop();
         var $skillsOffset = $(".skills").offset().top;
         var $portfolioOffset = $(".portfolio").offset().top;
         var $contactOffset = $(".contact").offset().top;
+        var $otherOffset = $(".other").offset().top;
         
         if(moveTop == 0){
+            $("header .numb span").text("01");
             if(aboutDone==false)
             $stop = false;
         }
         if($skillsOffset == moveTop){
+            $("header .numb span").text("02");
             skills();
         }if($portfolioOffset == moveTop){
+            $("header .numb span").text("03");
             portfolio();
         }if($contactOffset == moveTop){
+            $("header .numb span").text("04");
             contact();
+        } if($otherOffset == moveTop){
+            $("header .numb span").text("05");
+            other();
         } 
     });
 }
@@ -157,7 +136,7 @@ function about(){
     $(".about .intro .first_text").addClass("active");
     setTimeout(function(){
         $(".about .intro .icon_scroll").addClass("active");
-    },3000);
+    },1500);
     $("body").on("mousewheel", function (event) {
         if($aboutBg){
             var $mousewheel = event.originalEvent.wheelDelta;
@@ -167,24 +146,18 @@ function about(){
                 j++;
             };     
             $(".about .intro .bg").css("left",(j)*10 + "%");
-            if(j == -12){
+            if(j == -15){
                 $(".about .intro .first_text").removeClass("active");
-                $aboutBg = false;
+                $aboutBg = false;     
                 setTimeout(function(){
-                    $(".about .intro .last_text").addClass("active");
+                    $(".about .intro").addClass("active");
                     setTimeout(function(){
-                        $(".about .intro .img_box").addClass("active");
-                        setTimeout(function(){
-                            $(".about .intro").addClass("active");
-                            setTimeout(function(){
-                                $(".about .intro").css("display","none");
-                                $(".about .career").addClass("active");
-                                $stop = true;
-                                aboutDone = true;
-                            },1000)
-                        },4000)  
-                    },2500)    
-                },3000)      
+                        $(".about .intro").css("display","none");
+                        $(".about .career").addClass("active");
+                        $stop = true;
+                        aboutDone = true;
+                    },1000)
+                },1500)
             } 
         }
     });
@@ -209,7 +182,7 @@ function skills(){
                     if(k < 25){
                         k++;
                     }
-                },120);
+                },80);
             },500);
         },1000);        
     },500);
@@ -278,9 +251,7 @@ function portfolio_view(){
         $(".portfolio .view_wrap").css("display","none");
         $(".portfolio .view_wrap div").removeClass("active");
         $stop = true;
-    });
-
-    
+    });    
 }
 
 function contact(){
@@ -301,4 +272,19 @@ function contact(){
             },1000);
         },24000);
     },2800);
+}
+
+function other(){
+    $stop = true;
+    setTimeout(function(){
+        $(".other .tit").addClass("active");
+        setTimeout(function(){
+            $(".other .slide_wrap").addClass("active");
+        },1000);        
+    },500);
+
+    var $width = ($(".other .slide_wrap ul").width()*2);
+    var $slide_clone = $(".other .slide_wrap ul").clone();
+    $(".other .slide_wrap ul").after($slide_clone);
+    $(".other .slide_wrap ul").parent().css("width",$width);
 }
