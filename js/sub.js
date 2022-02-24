@@ -6,13 +6,14 @@ $(document).ready(function(){
     about();
     portfolio_view();
     portfolio_slide();
-    $("html, body").animate({scrollTop:0},100);  
+    other_rolling();    
 });
 
 let aboutDone = false;
 
 
 function control_mouse(){
+    $("html, body").animate({scrollTop:0},100);  
     $(document).bind("contextmenu", function(e){return false;});  // 마우스 우 클릭 금지
     $(document).bind('selectstart', function() {return false;}); // 드래그 클릭 금지
 }
@@ -281,10 +282,11 @@ function other(){
         setTimeout(function(){
             $(".other .slide_wrap").addClass("active");
         },1000);        
-    },500);
-
+    },500);    
+}
+function other_rolling(){
     var $width = ($(".other .slide_wrap ul").width()*2);
-    var $slide_clone = $(".other .slide_wrap ul").clone();
-    $(".other .slide_wrap ul").after($slide_clone);
-    $(".other .slide_wrap ul").parent().css("width",$width);
+        var $slide_clone = $(".other .slide_wrap ul").clone();
+        $(".other .slide_wrap ul").after($slide_clone);
+        $(".other .slide_wrap ul").parent().css("width",$width);
 }
