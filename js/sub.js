@@ -12,8 +12,7 @@ $(document).ready(function(){
 let aboutDone = false;
 
 
-function control_mouse(){
-    $("html, body").animate({scrollTop:0},100);  
+function control_mouse(){    
     $(document).bind("contextmenu", function(e){return false;});  // 마우스 우 클릭 금지
     $(document).bind('selectstart', function() {return false;}); // 드래그 클릭 금지
 }
