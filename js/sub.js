@@ -6,13 +6,14 @@ $(document).ready(function(){
     about();
     portfolio_view();
     portfolio_slide();
-    other_rolling();    
+    other_rolling();
+    $("html, body").animate({scrollTop:0},100);  
 });
 
 let aboutDone = false;
 
 
-function control_mouse(){    
+function control_mouse(){
     $(document).bind("contextmenu", function(e){return false;});  // 마우스 우 클릭 금지
     $(document).bind('selectstart', function() {return false;}); // 드래그 클릭 금지
 }
