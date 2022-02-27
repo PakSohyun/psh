@@ -55,7 +55,7 @@ function scroll(){
     var elm = "section";
     $(elm).each(function (index) {
         // 개별적으로 Wheel 이벤트 적용
-        $(this).on("mousewheel DOMMouseScroll scroll ", function (e) {
+        $(this).on("mousewheel DOMMouseScroll scroll touchmove", function (e) {
             if($stop){                            
                 if($moved){
                     $moved = false;
