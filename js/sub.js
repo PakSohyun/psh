@@ -134,10 +134,15 @@ var $aboutBg = true;
 function about(){
     $stop = false;
     var j = 10;    
+    
     $(".about .intro .first_text").addClass("active");
     setTimeout(function(){
         $(".about .intro .icon_scroll").addClass("active");
+        $(".about .intro .icon_hand").addClass("active");
     },1500);
+
+    //  [ PC ]
+    if($(window).outerWidth() >= 1025) 
     $("body").on("mousewheel", function (event) {
         if($aboutBg){
             var $mousewheel = event.originalEvent.wheelDelta;
@@ -162,12 +167,25 @@ function about(){
             } 
         }
     });
-    $(".about .career .left .img_box img").mouseenter(function(){
-        $(this).attr("src","images/about_02.png");
-    });
-    $(".about .career .left .img_box img").mouseleave(function(){
-         $(this).attr("src","images/about_01.png");
-    });
+//  [ 태블릿 / 모바일 ]
+    if($(window).outerWidth() < 1025){
+        $(".intro").click(function(){
+            $(".about .intro .bg").animate({left:"-220%"},3000, 'linear');
+            setTimeout(function(){
+                $(".about .intro .first_text").removeClass("active");
+                setTimeout(function(){
+                    $(".about .intro").addClass("active");
+                    setTimeout(function(){
+                        $(".about .intro").css("display","none");
+                        $(".about .career").addClass("active");
+                        $stop = true;
+                        aboutDone = true;
+                    },1000)
+                },2000)
+            },4000);
+        });
+    }
+
 }
 
 function skills(){
@@ -179,8 +197,9 @@ function skills(){
             $(".skill .program h3").addClass("active");
             setTimeout(function(){
                 setInterval(function(){
+                    var $length =  $(".skills .skill .photoshop .graph span").length;
                     $(".skills .skill .graph span:nth-child(" + k + ")").addClass("active");
-                    if(k < 25){
+                    if(k <= $length){
                         k++;
                     }
                 },80);
@@ -286,7 +305,8 @@ function other(){
 }
 function other_rolling(){
     var $width = ($(".other .slide_wrap ul").width()*2);
-        var $slide_clone = $(".other .slide_wrap ul").clone();
-        $(".other .slide_wrap ul").after($slide_clone);
-        $(".other .slide_wrap ul").parent().css("width",$width);
+    console.log($width);
+    var $slide_clone = $(".other .slide_wrap ul").clone();
+    $(".other .slide_wrap ul").after($slide_clone);
+    $(".other .slide_wrap ul").parent().css("width", $width);
 }
