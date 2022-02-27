@@ -55,7 +55,7 @@ function scroll(){
     var elm = "section";
     $(elm).each(function (index) {
         // 개별적으로 Wheel 이벤트 적용
-        $(this).on("mousewheel DOMMouseScroll scroll touchmove", function (e) {
+        $(this).on("mousewheel DOMMouseScroll" , function (e) {
             if($stop){                            
                 if($moved){
                     $moved = false;
@@ -96,8 +96,47 @@ function scroll(){
 
                 }
             }
-        });
+        });        
     });
+    if($(window).outerWidth() >= 1025){ 
+        var elm = "section";
+        $(elm).each(function (index) {
+            var $startY, $endY;
+            var moveTop = $(window).scrollTop();
+            var elmSelecter = $(elm).eq(index);
+            $("body","html").on('touchstart',function(event){
+                $startY = event.originalEvent.changedTouches[0].screenY;
+                e.preventDefault();
+            });
+            $("body","html").on('touchend',function(event){
+                $endY=event.originalEvent.changedTouches[0].screenY;
+                e.preventDefault();
+            });                 
+                if($startY-$endY>50){
+                    if ($(elmSelecter).prev() != undefined) {
+                        try{
+                            moveTop = $(elmSelecter).prev().offset().top;
+                        }catch(e){}
+                    }
+                }else if($endY-$startY>50){
+                    if($startY-$endY>50){
+                        if ($(elmSelecter).next() != undefined) {
+                            try{
+                                moveTop = $(elmSelecter).next().offset().top;
+                            }catch(e){}
+                        }
+                    }
+                }
+                // 화면 이동 
+                $("html,body").stop().animate({
+                    scrollTop: moveTop + 'px'
+                }, {
+                    duration: 500, complete: function () {
+                    }
+                });
+        });                
+            
+    };
 }
 
 function sectionTop(){      
@@ -305,7 +344,6 @@ function other(){
 }
 function other_rolling(){
     var $width = ($(".other .slide_wrap ul").width()*2);
-    console.log($width);
     var $slide_clone = $(".other .slide_wrap ul").clone();
     $(".other .slide_wrap ul").after($slide_clone);
     $(".other .slide_wrap ul").parent().css("width", $width);
