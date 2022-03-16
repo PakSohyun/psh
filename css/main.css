@@ -82,14 +82,14 @@ main .ani_wrap .right .ani.active .l_ani span:nth-child(2){animation: l_ani02 7s
     html{font-size: 50%;}
     main .tit > .last_tit p:nth-child(2){font-size: 1.8rem;}
 }
-@media screen and (min-width: 1025px) and (max-width: 1279px){
+@media screen and (min-width: 1024px) and (max-width: 1279px){
     html{font-size: 37.5%;}
     header h1{font-size: 3.2rem;}
     main .tit > p{font-size: 8.8rem;}
     main .tit > .last_tit p:nth-child(2){font-size: 2.8rem;}
     main .tit > .last_tit .btn a{font-size: 3.2rem; line-height: 4.8rem;}
 }
-@media screen and (min-width: 768px) and (max-width: 1024px){
+@media screen and (min-width: 768px) and (max-width: 1023px){
     html{font-size: 50%;}
     header{padding: 56px 5.2084%;}
     header h1{font-size: 2.8rem;}

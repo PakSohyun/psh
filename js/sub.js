@@ -7,7 +7,6 @@ $(document).ready(function(){
     portfolio_view();
     portfolio_slide();
     other_rolling();
-    $("html, body").animate({scrollTop:0},100);  
 });
 
 let aboutDone = false;
@@ -51,10 +50,11 @@ function cursor(){
 var $moved = true;
 var $stop = true;
 function scroll(){    
-    //  [ 섹션 스크롤 이벤트 ]
+//  [ PC ]
+    if($(window).outerWidth() >= 1024){ 
     var elm = "section";
     $(elm).each(function (index) {
-        // 개별적으로 Wheel 이벤트 적용
+    // 개별적으로 Wheel 이벤트 적용
         $(this).on("mousewheel DOMMouseScroll" , function (e) {
             if($stop){                            
                 if($moved){
@@ -68,26 +68,26 @@ function scroll(){
                     } 
                     else if (event.detail)
                         delta = -event.detail / 3;
-                    var moveTop = $(window).scrollTop();
-                    var elmSelecter = $(elm).eq(index);
+                    var $moveTop = $(window).scrollTop();
+                    var $elmSelecter = $(elm).eq(index);
                     // 마우스휠을 위에서 아래로
                     if (delta < 0) {
-                        if ($(elmSelecter).next() != undefined) {
+                        if ($($elmSelecter).next() != undefined) {
                             try{
-                                moveTop = $(elmSelecter).next().offset().top;
+                                $moveTop = $($elmSelecter).next().offset().top;
                             }catch(e){}
                         }
                     // 마우스휠을 아래에서 위로
                     } else {
-                        if ($(elmSelecter).prev() != undefined) {
+                        if ($($elmSelecter).prev() != undefined) {
                             try{
-                                moveTop = $(elmSelecter).prev().offset().top;
+                                $moveTop = $($elmSelecter).prev().offset().top;
                             }catch(e){}
                         }
                     }                 
                     // 화면 이동 
                     $("html,body").stop().animate({
-                        scrollTop: moveTop + 'px'
+                        scrollTop: $moveTop + 'px'
                     }, {
                         duration: 500, complete: function () {
                         $moved = true;                        
@@ -98,42 +98,43 @@ function scroll(){
             }
         });        
     });
-    if($(window).outerWidth() >= 1025){ 
+    }
+//  [ 태블릿 / 모바일 ]    
+    if($(window).outerWidth() < 1024){ 
         var elm = "section";
         $(elm).each(function (index) {
             var $startY, $endY;
-            var moveTop = $(window).scrollTop();
-            var elmSelecter = $(elm).eq(index);
-            $("body","html").on('touchstart',function(event){
-                $startY = event.originalEvent.changedTouches[0].screenY;
-                e.preventDefault();
+            $(this).bind('touchstart', function(e){ 
+                e.stopPropagation();
+                $startY = e.originalEvent.touches[0].clientY;
             });
-            $("body","html").on('touchend',function(event){
-                $endY=event.originalEvent.changedTouches[0].screenY;
-                e.preventDefault();
-            });                 
-                if($startY-$endY>50){
-                    if ($(elmSelecter).prev() != undefined) {
-                        try{
-                            moveTop = $(elmSelecter).prev().offset().top;
-                        }catch(e){}
-                    }
-                }else if($endY-$startY>50){
-                    if($startY-$endY>50){
-                        if ($(elmSelecter).next() != undefined) {
+            $(this).bind('touchend', function(e){
+                if($stop){
+                    var $moveTop = $(window).scrollTop();
+                    var $elmSelecter = $(elm).eq(index);
+                    e.stopPropagation();
+                    $endY = e.originalEvent.changedTouches[0].clientY; 
+                    if($startY - $endY > 50){
+                        if ($($elmSelecter).next() != undefined) {
                             try{
-                                moveTop = $(elmSelecter).next().offset().top;
+                                $moveTop = $($elmSelecter).next().offset().top;
                             }catch(e){}
+                        }     
+                        }else if($endY - $startY > 50){                   
+                            if ($($elmSelecter).prev() != undefined) {
+                                try{
+                                    $moveTop = $($elmSelecter).prev().offset().top;
+                                }catch(e){}
+                            }                                       
                         }
-                    }
-                }
-                // 화면 이동 
-                $("html,body").stop().animate({
-                    scrollTop: moveTop + 'px'
-                }, {
-                    duration: 500, complete: function () {
-                    }
-                });
+                    $("html,body").stop().animate({
+                        scrollTop: $moveTop + 'px'
+                    }, {
+                        duration: 500, complete: function () {
+                        }
+                    });
+                };
+            });                 
         });                
             
     };
@@ -180,7 +181,7 @@ function about(){
         $(".about .intro .icon_hand").addClass("active");
     },1500);
 
-    //  [ PC ]
+//  [ PC ]
     if($(window).outerWidth() >= 1025) 
     $("body").on("mousewheel", function (event) {
         if($aboutBg){
