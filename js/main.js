@@ -37,6 +37,7 @@ function cursor(){
 
 function tit(){
     $("main .tit").addClass("active");
+    $(".popup").fadeIn();
     setTimeout(function(){
         $(".first_tit").css("opacity","0");
         setTimeout(function(){
