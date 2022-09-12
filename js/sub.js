@@ -22,6 +22,7 @@ function cursor(){
         var $pointer = parseInt(Math.random()*12)+1;
         var $pointer_go = parseInt(Math.random()*4)+1;
         $("html").css("cursor","url('images/cursor_" + $default  + ".svg') 0 0, auto");
+        pointer(".arrow");
         pointer(".navigation img");
         pointer(".pagination ul"); 
         pointer(".portfolio .view_wrap > div .cancel");
@@ -45,6 +46,10 @@ function cursor(){
                 $("html").css("cursor","url('images/cursor_" + $default  + ".svg') 0 0, auto");
             }); 
         }
+}
+
+function arrow(){
+    
 }
 
 var $moved = true;
@@ -179,10 +184,28 @@ function about(){
     setTimeout(function(){
         $(".about .intro .icon_scroll").addClass("active");
         $(".about .intro .icon_hand").addClass("active");
+        setTimeout(function(){
+            $(".arrow").fadeIn();
+        },4500);
     },1500);
 
 //  [ PC ]
     if($(window).outerWidth() >= 1025) 
+    $(".arrow").click(function(){
+        $(".about .intro .bg").animate({left:"-180%"},6000, 'linear');
+        setTimeout(function(){
+            $(".about .intro .first_text").removeClass("active");
+            setTimeout(function(){
+                $(".about .intro").addClass("active");
+                setTimeout(function(){
+                    $(".about .intro").css("display","none");
+                    $(".about .career").addClass("active");
+                    $stop = true;
+                    aboutDone = true;
+                },1000)
+            },2000)
+        },4000);
+    });
     $("body").on("mousewheel", function (event) {
         if($aboutBg){
             var $mousewheel = event.originalEvent.wheelDelta;

@@ -1,6 +1,7 @@
 $(document).ready(function(){
     control_mouse();
     cursor();
+    popup();
     tit();
     menu();
 });
@@ -15,6 +16,7 @@ function cursor(){
     var $pointer_go = parseInt(Math.random()*4)+1;
     $("html").css("cursor","url('images/cursor_" + $default  + ".svg') 0 0, auto");
     pointer(".menu");
+    pointer(".popup .title");
     pointer_go(".btn a");
     pointer_go(".menu_box a");
     function pointer($target){
@@ -33,6 +35,12 @@ function cursor(){
             $("html").css("cursor","url('images/cursor_" + $default  + ".svg') 0 0, auto");
         }); 
     }
+}
+
+function popup(){
+    $(".popup").click(function(){
+        $(this).fadeOut();
+    });
 }
 
 function tit(){
