@@ -22,6 +22,8 @@ function cursor(){
         var $pointer = parseInt(Math.random()*12)+1;
         var $pointer_go = parseInt(Math.random()*4)+1;
         $("html").css("cursor","url('images/cursor_" + $default  + ".svg') 0 0, auto");
+        pointer(".arrow_l");
+        pointer(".arrow_r");
         pointer(".arrow");
         pointer(".navigation img");
         pointer(".pagination ul"); 
@@ -101,7 +103,47 @@ function scroll(){
 
                 }
             }
-        });        
+        });   
+        var page_numb = 0;
+        $(".arrow_l").click(function(){
+            if(page_numb == 0){
+                page_numb = 0;
+            } else{
+                page_numb--;
+            }
+            var $moveTop = $(window).scrollTop();
+            var $elmSelecter = $(elm).eq(page_numb);
+            $moveTop = $($elmSelecter).offset().top;
+
+            $("html,body").stop().animate({
+                    scrollTop: $moveTop + 'px'
+                }, {
+                    duration: 500, complete: function () {
+                    $moved = true;                        
+                    }
+                });
+            console.log(page_numb);
+        });
+        $(".arrow_r").click(function(){
+            if(page_numb == 4){
+                page_numb = 4;
+            } else{
+                page_numb++;
+            }
+            var $moveTop = $(window).scrollTop();
+            var $elmSelecter = $(elm).eq(page_numb);
+            $moveTop = $($elmSelecter).offset().top;
+
+            $("html,body").stop().animate({
+                    scrollTop: $moveTop + 'px'
+                }, {
+                    duration: 500, complete: function () {
+                    $moved = true;                        
+                    }
+                });
+                console.log(page_numb);
+        });
+        
     });
     }
 //  [ 태블릿 / 모바일 ]    

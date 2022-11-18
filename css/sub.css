@@ -11,7 +11,14 @@ header h1{overflow: hidden; display: inline-block;}
 header h1 a{display: inline-block;}
 header h1 a img{width: 100%;}
 header h1 a span{display: inline-block; text-indent: -99999px;}
-header .numb{display: inline-block;}
+header .page_cont{display: flex; align-items: center;}
+header .sec_arrow .inner{display: inline-block;}
+header .arrow_l,.arrow_r{position: relative; display: inline-block; width: 32px; height: 32px; border-radius: 100px; border: 1px solid #c4c4c4; background-color: transparent;}
+header .arrow_l{margin-right: 5px;}
+header .arrow_l:after,.arrow_r:after{position: absolute; left: 10px; content: ''; width: 8px; /* 사이즈 */ height: 8px; /* 사이즈 */ border-top: 3px solid rgb(170, 170, 170); /* 선 두께 */ border-right: 3px solid rgb(170, 170, 170); /* 선 두께 */}
+header .arrow_l:after{top: 11px; transform: rotate(315deg); /* 각도 */}
+header .arrow_r:after{top: 6.5px; transform: rotate(135deg); /* 각도 */}
+header .numb{display: inline-block; margin-right: 20px;}
 header .numb p{font-size: 2.4rem; font-weight: 400;}
 header .numb p span{font-size: 2.4rem; font-weight: 400;}
 
